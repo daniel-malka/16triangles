@@ -1,0 +1,13 @@
+.main {
+  box-sizing: border-box;
+  width: 100%;
+  background-color: black;
+  height: calc(100vh - 100px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.main__content {
+  padding: 5px;
+  border: 5px solid white;
+}
