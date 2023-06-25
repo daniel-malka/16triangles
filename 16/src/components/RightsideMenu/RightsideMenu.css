@@ -28,6 +28,22 @@
 .right-menu__colors-title {
   padding-bottom: 10px;
 }
+.right-menu__advanced-title {
+  padding-bottom: 10px;
+}
 .right-menu__icon {
   color: #fff;
+}
+.color-pallets {
+  height: 80px;
+  width: 300px;
+  background-color: black;
+}
+.right-menu__triangles-congestion {
+  margin: 0;
+  padding: 0;
+}
+.right-menu__triangles-congestion-item {
+  padding: 0;
+  margin: 0;
 }
