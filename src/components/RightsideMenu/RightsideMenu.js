@@ -57,7 +57,7 @@ function RightsideMenu({
             defaultValue={bgSize}
             valueLabelDisplay="auto"
             marks
-            step={trianglesSize}
+            step={trianglesSize * 2}
             min={100}
             max={850}
             onChange={(newSize) => setBgSize(newSize.target.value)}
