@@ -722,7 +722,6 @@ const TrianglesCanvas = ({ isClicked, canvasRef, bgColors, triangleStrokeColor, 
   const draw = (ctx) => {
     ctx.fillStyle = triangleColors[0];
     ctx.strokeStyle = triangleStrokeColor;
-    ctx.lineWidth = 15;
     for (let y = 0; y < ctx.canvas.height; y += trianglesSize / 2) {
       for (let x = 0; x < ctx.canvas.width; x += trianglesSize / 2) {
         const randIndex = Math.floor(Math.random() * trianglesConfigs.length);
