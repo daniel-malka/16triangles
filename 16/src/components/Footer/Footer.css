@@ -1,7 +1,0 @@
-.footer {
-  width: 100%;
-  background-color: #fff;
-  position: fixed;
-  bottom: -100px; /* Initially hide the footer off the screen */
-  transition: bottom 0.3s ease; /* Add a smooth transition effect */
-}
