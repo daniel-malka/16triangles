@@ -1,0 +1,49 @@
+.right-menu__menu {
+  visibility: hidden;
+  position: absolute;
+  left: 0;
+  width: 400px;
+  height: 85vh;
+  background-color: #f1f1f1;
+  transition: transform 0.6s ease-in-out;
+  transform: translateX(-100%);
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.right-menu__menu.open {
+  visibility: visible;
+  transform: translateX(0);
+}
+.right-menu__toggle {
+  visibility: visible;
+  position: absolute;
+  left: 400px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.right-menu__elements {
+  padding-left: 30px;
+}
+.right-menu__colors-title {
+  padding-bottom: 10px;
+}
+.right-menu__advanced-title {
+  padding-bottom: 10px;
+}
+.right-menu__icon {
+  color: #fff;
+}
+.color-pallets {
+  height: 80px;
+  width: 300px;
+  background-color: black;
+}
+.right-menu__triangles-congestion {
+  margin: 0;
+  padding: 0;
+}
+.right-menu__triangles-congestion-item {
+  padding: 0;
+  margin: 0;
+}
