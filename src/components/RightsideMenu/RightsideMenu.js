@@ -15,6 +15,10 @@ import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 function RightsideMenu({
   bgColors,
   setBgColors,
+  bgSize,
+  setBgSize,
+  trianglesSize,
+  setTrianglesSize,
   triangleColors,
   setTriangleColors,
   triangleStrokeColor,
@@ -43,11 +47,21 @@ function RightsideMenu({
           </Typography>
           <Typography variant="subtitle1">Background Color:</Typography>
           <Button onClick={() => setIsbackgroundColorPickerOpen(!isbackgroundColorPickerOpen)}>
-            {isbackgroundColorPickerOpen ? `Close palette` : `open palette`}
+            {isbackgroundColorPickerOpen ? `Close background palette` : `open background palette`}
           </Button>
           <BackgroundColorPickerComponent colors={bgColors} setColors={setBgColors} isVisible={isbackgroundColorPickerOpen} />
           <Typography variant="subtitle1">Canvas size:</Typography>
-          <Slider className="right-menu__canvas-size" />
+          <Slider
+            className="right-menu__canvas-size"
+            aria-label="Temperature"
+            defaultValue={bgSize}
+            valueLabelDisplay="auto"
+            marks
+            step={trianglesSize}
+            min={100}
+            max={850}
+            onChange={(newSize) => setBgSize(newSize.target.value)}
+          />
           <Typography variant="subtitle1">Triangles colors:</Typography>
           <Button onClick={() => setIsTrianglesColorPickerOpen(!isTrianglesColorPickerOpen)}>
             {isTrianglesColorPickerOpen ? `Close triangle palette` : `open triangle palette`}
@@ -61,7 +75,17 @@ function RightsideMenu({
             isVisible={isTrianglesColorPickerOpen}
           />
           <Typography variant="subtitle1">Triangle size:</Typography>
-          <Slider className="right-menu__triangle-size" />
+          <Slider
+            className="right-menu__triangle-size-slider"
+            aria-label="Temperature"
+            defaultValue={trianglesSize}
+            valueLabelDisplay="auto"
+            step={5}
+            marks
+            min={5}
+            max={400}
+            onChange={(newSize) => setTrianglesSize(newSize.target.value)}
+          />
           <Typography variant="h5" className="right-menu__advanced-title">
             Advanced Triangles Settings
           </Typography>

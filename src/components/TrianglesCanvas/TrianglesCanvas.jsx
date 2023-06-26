@@ -1,24 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
 
-const configs = {
-  1: [0, 0, 20, 0, 0, 20],
-  2: [0, 0, 20, 0, 20, 20],
-  3: [20, 0, 20, 20, 0, 20],
-  4: [0, 0, 20, 20, 20, 20],
-  5: [20, 0, 40, 0, 20, 20],
-  6: [20, 0, 40, 0, 40, 20],
-  7: [40, 0, 40, 20, 20, 20],
-  8: [20, 0, 40, 20, 20, 20],
-  9: [0, 20, 20, 20, 0, 40],
-  10: [0, 20, 20, 20, 20, 40],
-  11: [20, 20, 20, 40, 0, 40],
-  12: [0, 20, 20, 40, 0, 40],
-  13: [20, 20, 40, 20, 20, 40],
-  14: [20, 20, 40, 20, 40, 40],
-  15: [40, 20, 40, 40, 20, 40],
-  16: [20, 20, 40, 40, 20, 40],
-};
-
 const trianglesConfigs = [
   [1],
   [2],
@@ -621,12 +602,30 @@ const trianglesConfigs = [
   [10, 11, 14],
 ];
 
-const TrianglesCanvas = ({ isClicked, canvasRef, bgColors, triangleStrokeColor, triangleColors }) => {
+const TrianglesCanvas = ({ isClicked, canvasRef, bgColors, triangleStrokeColor, triangleColors, trianglesSize, bgSize }) => {
+  const configs = {
+    1: [0, 0, trianglesSize / 4, 0, 0, trianglesSize / 4],
+    2: [0, 0, trianglesSize / 4, 0, trianglesSize / 4, trianglesSize / 4],
+    3: [trianglesSize / 4, 0, trianglesSize / 4, trianglesSize / 4, 0, trianglesSize / 4],
+    4: [0, 0, trianglesSize / 4, trianglesSize / 4, trianglesSize / 4, trianglesSize / 4],
+    5: [trianglesSize / 4, 0, trianglesSize / 2, 0, trianglesSize / 4, trianglesSize / 4],
+    6: [trianglesSize / 4, 0, trianglesSize / 2, 0, trianglesSize / 2, trianglesSize / 4],
+    7: [trianglesSize / 2, 0, trianglesSize / 2, trianglesSize / 4, trianglesSize / 4, trianglesSize / 4],
+    8: [trianglesSize / 4, 0, trianglesSize / 2, trianglesSize / 4, trianglesSize / 4, trianglesSize / 4],
+    9: [0, trianglesSize / 4, trianglesSize / 4, trianglesSize / 4, 0, trianglesSize / 2],
+    10: [0, trianglesSize / 4, trianglesSize / 4, trianglesSize / 4, trianglesSize / 4, trianglesSize / 2],
+    11: [trianglesSize / 4, trianglesSize / 4, trianglesSize / 4, trianglesSize / 2, 0, trianglesSize / 2],
+    12: [0, trianglesSize / 4, trianglesSize / 4, trianglesSize / 2, 0, trianglesSize / 2],
+    13: [trianglesSize / 4, trianglesSize / 4, trianglesSize / 2, trianglesSize / 4, trianglesSize / 4, trianglesSize / 2],
+    14: [trianglesSize / 4, trianglesSize / 4, trianglesSize / 2, trianglesSize / 4, trianglesSize / 2, trianglesSize / 2],
+    15: [trianglesSize / 2, trianglesSize / 4, trianglesSize / 2, trianglesSize / 2, trianglesSize / 4, trianglesSize / 2],
+    16: [trianglesSize / 4, trianglesSize / 4, trianglesSize / 2, trianglesSize / 2, trianglesSize / 4, trianglesSize / 2],
+  };
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
-    canvas.width = 760;
-    canvas.height = 760;
+    canvas.width = bgSize;
+    canvas.height = bgSize;
     const numColors = bgColors.length;
 
     if (numColors === 1) {
@@ -668,14 +667,13 @@ const TrianglesCanvas = ({ isClicked, canvasRef, bgColors, triangleStrokeColor, 
 
       const clickedTriangle = findClickedTriangle(offsetX, offsetY);
       if (clickedTriangle) {
-        // You can access the clicked triangle's coordinates here
         console.log('Clicked triangle coordinates:', clickedTriangle.x, clickedTriangle.y);
       }
     };
 
     const findClickedTriangle = (x, y) => {
-      for (let ty = 0; ty < ctx.canvas.height; ty += 40) {
-        for (let tx = 0; tx < ctx.canvas.width; tx += 40) {
+      for (let ty = 0; ty < ctx.canvas.height; ty += trianglesSize / 2) {
+        for (let tx = 0; tx < ctx.canvas.width; tx += trianglesSize / 2) {
           for (let i = 0; i < trianglesConfigs.length; i++) {
             const triangles = trianglesConfigs[i];
             for (let j = 0; j < triangles.length; j++) {
@@ -724,9 +722,9 @@ const TrianglesCanvas = ({ isClicked, canvasRef, bgColors, triangleStrokeColor, 
   const draw = (ctx) => {
     ctx.fillStyle = triangleColors[0];
     ctx.strokeStyle = triangleStrokeColor;
-
-    for (let y = 0; y < ctx.canvas.height; y += 40) {
-      for (let x = 0; x < ctx.canvas.width; x += 40) {
+    ctx.lineWidth = 15;
+    for (let y = 0; y < ctx.canvas.height; y += trianglesSize / 2) {
+      for (let x = 0; x < ctx.canvas.width; x += trianglesSize / 2) {
         const randIndex = Math.floor(Math.random() * trianglesConfigs.length);
         const triangles = trianglesConfigs[randIndex];
 

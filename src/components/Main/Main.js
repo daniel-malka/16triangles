@@ -1,15 +1,16 @@
 import React, { useState, useRef } from 'react';
 import TrianglesCanvas from '../TrianglesCanvas/TrianglesCanvas';
 import RightsideMenu from '../RightsideMenu/RightsideMenu';
-
 function Main() {
   const [isClicked, setIsClicked] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const [bgColors, setBgColors] = useState(['#000000']);
   const [triangleColors, setTriangleColors] = useState(['#ffffff']);
   const [triangleStrokeColor, setTriangleStrokeColor] = useState(['#ffffff']);
+  const [trianglesSize, setTrianglesSize] = useState(40);
+  const [bgSize, setBgSize] = useState(500);
   const canvasRef = useRef(null);
-
+  console.log(trianglesSize);
   const handleSaveClick = () => {
     const canvas = canvasRef.current;
     const link = document.createElement('a');
@@ -26,14 +27,20 @@ function Main() {
         setTriangleStrokeColor={setTriangleStrokeColor}
         triangleColors={triangleColors}
         setTriangleColors={setTriangleColors}
+        trianglesSize={trianglesSize}
+        setTrianglesSize={setTrianglesSize}
+        bgSize={bgSize}
+        setBgSize={setBgSize}
       />
       <div className="main__content">
         <TrianglesCanvas
+          bgSize={bgSize}
           isClicked={isClicked}
           canvasRef={canvasRef}
           triangleColors={triangleColors}
           setTriangleColors={setTriangleColors}
           bgColors={bgColors}
+          trianglesSize={trianglesSize}
         />
         <button className="main__run-button" onClick={() => setIsClicked(!isClicked)}>
           Run
