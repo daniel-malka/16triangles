@@ -23,7 +23,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "gh-pages -d build/static"
+    "deploy": "scp -r ./build/* triangles16@34.105.14.148:/home/danielmalka999/front"
   },
   "eslintConfig": {
     "extends": [
