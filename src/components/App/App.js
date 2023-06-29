@@ -2,15 +2,17 @@ import Header from '../Header/Header';
 import Main from '../Main/Main';
 import About from '../About/About';
 import Footer from '../Footer/Footer';
-import React from 'react';
+import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import '../../index.css';
 
 function App() {
+  const [screen, setScreen] = useState(window.innerWidth);
+
   return (
     <div className="app">
       <Router>
-        <Header />
+        <Header screen={screen} />
         <Routes>
           <Route path="/" element={<Main />} />
 

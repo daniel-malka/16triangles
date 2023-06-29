@@ -13,9 +13,8 @@ const BackgroundColorPickerComponent = ({ isVisible, colors, setColors }) => {
     setIsDragging(false);
   };
   const handleColorChange = (color) => {
-    // Check if the color picker is being dragged
     if (isDragging) {
-      return; // Ignore color changes while dragging
+      return;
     }
 
     const newColor = color.hex;
@@ -30,7 +29,7 @@ const BackgroundColorPickerComponent = ({ isVisible, colors, setColors }) => {
   };
   return (
     isVisible && (
-      <div>
+      <div className='sketchpicker background-sketchpicker'>
         <SketchPicker
           color={colors[colors.length - 1]}
           onChange={handleColorChange}

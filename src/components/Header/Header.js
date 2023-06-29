@@ -1,13 +1,16 @@
 import './Header.css';
+import { useState } from 'react';
 import TrianglesLogo from '../TrianglesLogo/TrianglesLogo';
 import { Link } from 'react-router-dom';
-function Header() {
+function Header(screen) {
   return (
     <header className="header">
       <h1 className="header__title">16 TRIANGLES</h1>
-      <div className="header__component">
-        <TrianglesLogo />
-      </div>
+      {screen < 1440 && (
+        <div className="header__component">
+          <TrianglesLogo />
+        </div>
+      )}
 
       <nav className="header__nav">
         <ul className="header__nav">

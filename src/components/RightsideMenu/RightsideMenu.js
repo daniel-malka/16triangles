@@ -16,6 +16,8 @@ function RightsideMenu({
   bgColors,
   setBgColors,
   bgSize,
+  isRightMenuOpen,
+  setIsRightMenuOpen,
   setBgSize,
   trianglesSize,
   setTrianglesSize,
@@ -24,7 +26,6 @@ function RightsideMenu({
   triangleStrokeColor,
   setTriangleStrokeColor,
 }) {
-  const [isRightMenuOpen, setIsRightMenuOpen] = useState(true);
   const [isbackgroundColorPickerOpen, setIsbackgroundColorPickerOpen] = useState(false);
   const [isTrianglesColorPickerOpen, setIsTrianglesColorPickerOpen] = useState(false);
 
@@ -128,8 +129,9 @@ function RightsideMenu({
           <Button onClick={() => setIsbackgroundColorPickerOpen(!isbackgroundColorPickerOpen)}>
             {isbackgroundColorPickerOpen ? 'Close background palette' : 'Open background palette'}
           </Button>
+          {bgColors.length >= 1 && <Button onClick={() => setBgColors([])}>reset colors</Button>}
           <BackgroundColorPickerComponent colors={bgColors} setColors={setBgColors} isVisible={isbackgroundColorPickerOpen} />
-          {bgColors.length >= 4 && <Button onClick={() => setBgColors([])}>reset colors</Button>}
+
           <Typography variant="subtitle1">Canvas size:</Typography>
           <Slider
             className="right-menu__canvas-size"
