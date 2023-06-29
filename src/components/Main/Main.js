@@ -1,16 +1,17 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import TrianglesCanvas from '../TrianglesCanvas/TrianglesCanvas';
 import RightsideMenu from '../RightsideMenu/RightsideMenu';
+
 function Main() {
   const [isClicked, setIsClicked] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
-  const [bgColors, setBgColors] = useState(['#000000']);
+  const [bgColors, setBgColors] = useState([]);
   const [triangleColors, setTriangleColors] = useState(['#ffffff']);
   const [triangleStrokeColor, setTriangleStrokeColor] = useState(['#ffffff']);
   const [trianglesSize, setTrianglesSize] = useState(40);
   const [bgSize, setBgSize] = useState(500);
   const canvasRef = useRef(null);
-  console.log(trianglesSize);
+
   const handleSaveClick = () => {
     const canvas = canvasRef.current;
     const link = document.createElement('a');
@@ -18,6 +19,11 @@ function Main() {
     link.download = 'canvas.png'; // Set the download filename
     link.click(); // Simulate click on the link to trigger download
   };
+
+  useEffect(() => {
+    console.log(bgColors);
+  }, [bgColors]);
+
   return (
     <section className="main">
       <RightsideMenu

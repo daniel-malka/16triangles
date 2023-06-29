@@ -15,7 +15,6 @@
   height: calc(100vh - 160px);
   background-image: url('../../images/download.png');
   opacity: 0.3;
-  z-index: -1;
 }
 
 .about__content {

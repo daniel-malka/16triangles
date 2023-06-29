@@ -43,7 +43,7 @@ const TrianglesLogo = () => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
     canvas.width = 900;
-    canvas.height = 60;
+    canvas.height = 30;
     ctx.fillStyle = 'black';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     draw(ctx);
