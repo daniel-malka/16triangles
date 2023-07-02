@@ -1,28 +1,40 @@
-import React, { useEffect, useState } from 'react';
-import './Footer.css';
+import git from '../../images/Vector.svg';
+import facebook from '../../images/facebook.svg';
 
-function Footer() {
-  const [showFooter, setShowFooter] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
-      const isAtBottom = scrollTop + clientHeight >= scrollHeight - 20; // Adjust the threshold as needed
-
-      setShowFooter(isAtBottom);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
+const Footer = () => {
   return (
-    <footer className={`footer ${showFooter ? 'show' : ''}`}>
-      <div className="footer__links">{/* Footer links */}</div>
+    <footer className="footer">
+      <p className="footer__copyrights">© {new Date().getFullYear()} Daniel Malka, protfolio page</p>
+      <nav className="footer__wrap">
+        <ul className="footer__div">
+          <li className="footer__link footer__button">
+            <a target="_blank" href="https://practicum.com/" rel="noreferrer">
+              Practicum
+            </a>
+          </li>
+          <li className="footer__email footer__button">Home</li>
+        </ul>
+        <ul className="footer__imgs">
+          <li>
+            <a target="_blank" href="https://github.com/daniel-malka" className="footer__git footer__button" rel="noreferrer">
+              <img src={git} alt="git" />
+            </a>
+          </li>
+          <li>
+            {' '}
+            <a
+              target="_blank"
+              href="https://www.linkedin.com/in/danmalk/"
+              className="footer__git footer__button"
+              rel="noreferrer"
+            >
+              <img src={facebook} alt="facebook" />
+            </a>
+          </li>
+        </ul>
+      </nav>
     </footer>
   );
-}
+};
 
 export default Footer;

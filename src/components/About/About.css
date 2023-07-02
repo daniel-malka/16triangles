@@ -49,9 +49,10 @@
   font-size: 18px;
   line-height: 24px;
   color: #000;
-  max-width: 1008px;
+  max-width: 800px;
   margin-block-start: 0;
   margin-block-end: 0;
+  margin-bottom: 20px;
 }
 @media screen and (max-width: 400px) {
   .about__title {

@@ -7,19 +7,18 @@ function About() {
       <div className="about__content">
         <h1 className="about__title">16 TRIANGLES</h1>
         <p className="about__description">
-          Welcome to our mesmerizing generative art application powered by p5.js! Prepare to dive into a world of infinite
-          possibilities and creativity. Our application harnesses the power of p5.js to generate beautiful and unique art pieces
-          composed of triangles. With over 2,000 unique options, the random number generator at the core of our application
-          ensures that each art piece is truly one-of-a-kind. Watch as the triangles elegantly bend and shape-shift, forming
-          captivating patterns and compositions. The continuous evolution of the artwork creates a mesmerizing visual experience
-          that will leave you in awe. But the magic doesn't stop there. Our application puts you in control of the artistic
-          process. Customize and personalize your art by exploring various customization options. Change the background color to
-          set the mood and create the perfect atmosphere for your artwork. Experiment with different triangle colors to evoke
-          different emotions and vibes. Feeling adventurous? Modify the sequence of generating new shapes to further enhance your
-          artistic expression. Play with the timing and arrangement of the triangles to create dynamic and evolving compositions
-          that reflect your unique artistic vision. Whether you're an art enthusiast, a creative explorer, or simply someone who
-          appreciates the beauty of generative art, our application offers a captivating experience that will keep you engaged and
-          inspired. Immerse yourself in the world of generative art and unleash your creativity with our p5.js-powered application
+          Welcome to our mesmerizing generative art app powered by p5.js! Dive into a world of infinite possibilities and
+          creativity. Harnessing p5.js, we generate unique art pieces composed of triangles. With over 2,000 options, each piece
+          is truly one-of-a-kind. Watch as triangles elegantly shape-shift into captivating patterns. Customize your art with
+          various options, from background color to triangle colors. Modify the sequence and arrangement for dynamic compositions
+          reflecting your vision. Engage, explore, and unleash your creativity with our p5.js-powered app!
+        </p>
+        <p className="about__description">
+          The options are divided into groups. The first group includes individual triangles: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
+          12, 13, 14, 15, and 16. The second group consists of combinations like 1+2, 1+3, 1+4, etc., skipping 2+4 for now, and
+          including 2+3, 2+5, and so on. The third group skips combinations like 1+2+3, 1+2+4, and includes combinations like
+          1+2+5 and 1+2+6. Combinations like 2+4, 6+8, 10+12, and 14+16 are omitted because they would result in the same pattern
+          as 1+3, 5+7, 9+11, and 13+15 respectively. The goal is to give each option the same odds, so repetitions are avoided.
         </p>
       </div>
     </section>
