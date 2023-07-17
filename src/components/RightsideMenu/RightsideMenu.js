@@ -12,23 +12,33 @@ import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
 import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
 import BorderClearRoundedIcon from '@mui/icons-material/BorderClearRounded';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
+
 function RightsideMenu({
+  strokeWidth,
+  setStrokeWidth,
   bgColors,
+  isCirclesApp,
   setBgColors,
   bgSize,
+  setBgSize,
   isRightMenuOpen,
   setIsRightMenuOpen,
-  setBgSize,
+  isbackgroundColorPickerOpen,
+  setIsbackgroundColorPickerOpen,
+  isTrianglesColorPickerOpen,
+  setIsTrianglesColorPickerOpen,
   trianglesSize,
   setTrianglesSize,
-  triangleColors,
-  setTriangleColors,
-  triangleStrokeColor,
+  strokeColor,
+  setStrokeColor,
+  fillColor,
+  setFillColor,
   setTriangleStrokeColor,
 }) {
-  const [isbackgroundColorPickerOpen, setIsbackgroundColorPickerOpen] = useState(false);
-  const [isTrianglesColorPickerOpen, setIsTrianglesColorPickerOpen] = useState(false);
-
+  useEffect(() => {
+    if (isbackgroundColorPickerOpen) setIsTrianglesColorPickerOpen(false);
+    // if (isTrianglesColorPickerOpen) setIsbackgroundColorPickerOpen(false);
+  });
   const marks = [
     {
       value: (bgSize / 10).toFixed(3),
@@ -132,7 +142,7 @@ function RightsideMenu({
           {bgColors.length >= 1 && <Button onClick={() => setBgColors([])}>reset colors</Button>}
           <BackgroundColorPickerComponent colors={bgColors} setColors={setBgColors} isVisible={isbackgroundColorPickerOpen} />
 
-          <Typography variant="subtitle1">Canvas size:</Typography>
+          {/* <Typography variant="subtitle1">Canvas size:</Typography>
           <Slider
             className="right-menu__canvas-size"
             aria-label="Temperature"
@@ -146,41 +156,78 @@ function RightsideMenu({
             min={100}
             max={800}
             onChange={(event, newSize) => setBgSize(newSize)}
-          />
-          <Typography variant="subtitle1">Triangles colors:</Typography>
+          /> */}
+          <Typography variant="subtitle1">{!isCirclesApp ? 'Triangles' : 'Circles'} colors:</Typography>
           <Button onClick={() => setIsTrianglesColorPickerOpen(!isTrianglesColorPickerOpen)}>
-            {isTrianglesColorPickerOpen ? 'Close triangle palette' : 'Open triangle palette'}
+            {isTrianglesColorPickerOpen ? `Close` : `Open`} {!isCirclesApp ? `triangle` : `Circles`} palette
           </Button>
           <TriangleColorPickerComponent
             className="right-menu__triangles-color-picker"
-            triangleColors={triangleColors}
-            setTriangleColors={setTriangleColors}
-            triangleStrokeColor={triangleStrokeColor}
+            fillColor={fillColor}
+            strokeColor={strokeColor}
+            setStrokeColor={setStrokeColor}
             setTriangleStrokeColor={setTriangleStrokeColor}
             isVisible={isTrianglesColorPickerOpen}
           />
-          <Typography variant="subtitle1">Triangle size:</Typography>
-          <Slider
-            className="right-menu__triangle-size-slider"
-            aria-label="Restricted values"
-            valueLabelDisplay="auto"
-            step={null}
-            sx={{
-              width: 300,
-            }}
-            marks={marks.map((mark) => ({
-              ...mark,
-              label: mark.value === trianglesSize && '',
-            }))}
-            min={0}
-            max={bgSize}
-            onChange={(event, newSize) => setTrianglesSize(newSize * 2)}
-          />
+          <Typography variant="subtitle1">{!isCirclesApp ? 'Triangle' : 'Circle'} size:</Typography>
+          {!isCirclesApp ? (
+            <Slider
+              className="right-menu__triangle-size-slider"
+              aria-label="Restricted values"
+              valueLabelDisplay="auto"
+              step={null}
+              sx={{
+                width: '300px',
+                '& .MuiSlider-rail': {
+                  height: 8, // Adjust the height of the rail
+                  borderRadius: 4, // Adjust the border radius of the rail
+                },
+                '& .MuiSlider-track': {
+                  height: 8, // Adjust the height of the track
+                  borderRadius: 4, // Adjust the border radius of the track
+                },
+              }}
+              marks={marks.map((mark) => ({
+                ...mark,
+                label: mark.value === trianglesSize && '',
+              }))}
+              min={0}
+              max={bgSize}
+              onChange={(event, newSize) => setTrianglesSize(newSize * 2)}
+            />
+          ) : (
+            <Slider
+              sx={{
+                width: '300px',
+                '& .MuiSlider-rail': {
+                  height: 8, // Adjust the height of the rail
+                  borderRadius: 4, // Adjust the border radius of the rail
+                },
+                '& .MuiSlider-track': {
+                  height: 8, // Adjust the height of the track
+                  borderRadius: 4, // Adjust the border radius of the track
+                },
+              }}
+              className="right-menu__triangle-size-slider"
+              getAriaLabel={() => 'Temperature range'}
+              valueLabelDisplay="auto"
+              value={strokeWidth}
+              onChange={(event, newStrokeWidth) => setStrokeWidth(newStrokeWidth)}
+              marks={marks}
+              min={1}
+              max={10}
+              step={1}
+              disableSwap
+            />
+          )}
+
           <Typography variant="h5" className="right-menu__advanced-title">
-            Advanced Triangles Settings
+            Advanced {!isCirclesApp ? 'Triangles' : 'Circles'} Settings
           </Typography>
           <FormControl>
-            <FormLabel className="right-menu__triangles-congestion">Triangles congestion:</FormLabel>
+            <FormLabel className="right-menu__triangles-congestion">
+              {!isCirclesApp ? 'Triangle' : 'Circle'} congestion:
+            </FormLabel>
             <RadioGroup
               row
               className="right-menu__triangles-radio"

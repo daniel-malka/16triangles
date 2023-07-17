@@ -2,26 +2,36 @@ import React, { useState, useEffect, useRef } from 'react';
 import TrianglesCanvas from '../TrianglesCanvas/TrianglesCanvas';
 import RightsideMenu from '../RightsideMenu/RightsideMenu';
 import { Button, Slider, Typography } from '@mui/material';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
+import Circles from '../circles/Circles';
 import BackgroundColorPickerComponent from '../BackgroundColorPickerComponent/BackgroundColorPickerComponent';
 import TriangleColorPickerComponent from '../TriangleColorPickerComponent/TriangleColorPickerComponent';
-function Main() {
+
+const Main = () => {
+  const [isCirclesApp, setIsCirclesApp] = useState(false);
+  const [isModified, setIsModified] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
-  const [bgColors, setBgColors] = useState([]);
-  const [triangleColors, setTriangleColors] = useState(['#ffffff']);
-  const [triangleStrokeColor, setTriangleStrokeColor] = useState(['#ffffff']);
-  const [trianglesSize, setTrianglesSize] = useState(40);
-  const [bgSize, setBgSize] = useState(500);
+  const [bgColors, setBgColors] = useState(['#000']);
+  const [fillColor, setFillColor] = useState(['#fff']);
+  const [strokeColor, setStrokeColor] = useState(['#ffffff']);
+  const [strokeWidth, setStrokeWidth] = useState(3);
   const [isRightMenuOpen, setIsRightMenuOpen] = useState(true);
   const [isbackgroundColorPickerOpen, setIsbackgroundColorPickerOpen] = useState(false);
   const [isTrianglesColorPickerOpen, setIsTrianglesColorPickerOpen] = useState(false);
-  const canvasRef = useRef(null);
+  const canvasRef1 = useRef(null);
+  const canvasRef2 = useRef(null);
   const [screen, setScreen] = useState(window.innerWidth);
+  const [bgSize, setBgSize] = useState(screen - 20);
+  const [size, setSize] = useState(screen);
+  const [trianglesSize, setTrianglesSize] = useState((screen - 20) / 10);
+  const handleCirclesApp = () => {
+    setIsCirclesApp(!isCirclesApp);
+    setBgColors([]);
+    setStrokeColor(['#fff']);
+  };
+  useEffect(() => {
+    setSize(screen);
+  }, [screen, setIsTrianglesColorPickerOpen, setIsbackgroundColorPickerOpen]);
   const marks = [
     {
       value: (bgSize / 10).toFixed(3),
@@ -101,158 +111,231 @@ function Main() {
     },
   ];
   const handleSaveClick = () => {
-    const canvas = canvasRef.current;
+    const canvas = isCirclesApp ? canvasRef1.current : canvasRef2.current;
+    const resizedCanvas = document.createElement('canvas');
+    const scaleFactor = 10;
+    resizedCanvas.width = canvas.width * scaleFactor;
+    resizedCanvas.height = canvas.height * scaleFactor;
+    const resizedContext = resizedCanvas.getContext('2d');
+    resizedContext.drawImage(canvas, 0, 0, resizedCanvas.width, resizedCanvas.height);
+
     const link = document.createElement('a');
-    link.href = canvas.toDataURL(); // Get the canvas data URL
-    link.download = 'canvas.png'; // Set the download filename
-    link.click(); // Simulate click on the link to trigger download
+    link.href = resizedCanvas.toDataURL();
+    link.download = isCirclesApp ? 'circles.png' : 'triangles.png';
+    link.click();
+  };
+
+  useEffect(() => {
+    if (screen > 1440) setBgSize(800);
+  }, [isCirclesApp]);
+
+  useEffect(() => {
+    setIsModified(true);
+  }, [bgColors, fillColor, trianglesSize, strokeWidth, strokeColor]);
+
+  const handleIsClicked = () => {
+    console.log('hi');
+    setIsClicked(!isClicked);
+    setIsModified(false);
   };
 
   return screen > 1440 ? (
     <section className="main">
       <RightsideMenu
+        isbackgroundColorPickerOpen={isbackgroundColorPickerOpen}
+        setIsbackgroundColorPickerOpen={setIsbackgroundColorPickerOpen}
+        isTrianglesColorPickerOpen={isTrianglesColorPickerOpen}
+        setIsTrianglesColorPickerOpen={setIsTrianglesColorPickerOpen}
+        strokeWidth={strokeWidth}
+        setStrokeWidth={setStrokeWidth}
+        isCirclesApp={isCirclesApp}
         isRightMenuOpen={isRightMenuOpen}
         setIsRightMenuOpen={setIsRightMenuOpen}
         bgColors={bgColors}
         setBgColors={setBgColors}
-        triangleStrokeColor={triangleStrokeColor}
-        setTriangleStrokeColor={setTriangleStrokeColor}
-        triangleColors={triangleColors}
-        setTriangleColors={setTriangleColors}
+        strokeColor={strokeColor}
+        setStrokeColor={setStrokeColor}
+        fillColor={fillColor}
+        setFillColor={setFillColor}
         trianglesSize={trianglesSize}
         setTrianglesSize={setTrianglesSize}
         bgSize={bgSize}
         setBgSize={setBgSize}
-      />{' '}
+      />
+
       <div className="main__settings-buttons-box">
-        <button className="main__run-button" onClick={() => setIsClicked(!isClicked)}>
+        <button className={`main__button  ${isModified && 'main__run-button'}`} onClick={handleIsClicked}>
           Run
         </button>
-        <button className="main__save-button" onClick={handleSaveClick}>
+        <button className="main__button  main__save-button" onClick={handleSaveClick}>
           Save
         </button>
+        <button className="main__button main__circle-button" onClick={handleCirclesApp}>
+          {isCirclesApp ? 'triangles' : 'circles'}
+        </button>
       </div>
-      <div className="main__content">
-        <TrianglesCanvas
-          bgSize={bgSize}
-          isClicked={isClicked}
-          canvasRef={canvasRef}
-          triangleColors={triangleColors}
-          setTriangleColors={setTriangleColors}
-          bgColors={bgColors}
-          trianglesSize={trianglesSize}
-        />
+      <div className="main__canvases">
+        {!isCirclesApp ? (
+          <TrianglesCanvas
+            screen={screen}
+            bgSize={bgSize}
+            isClicked={isClicked}
+            canvasRef={canvasRef2}
+            strokeColor={strokeColor}
+            fillColor={fillColor}
+            setFillColor={setFillColor}
+            bgColors={bgColors}
+            trianglesSize={trianglesSize}
+          />
+        ) : (
+          <Circles
+            screen={screen}
+            isClicked={isClicked}
+            size={size}
+            strokeColor={strokeColor}
+            fillColor={fillColor}
+            bgColors={bgColors}
+            strokeWidth={strokeWidth}
+            canvasRef={canvasRef1}
+          />
+        )}
       </div>
     </section>
-  ) : screen < 1440 ? (
+  ) : screen < 1440 && screen > 800 ? (
+    ''
+  ) : screen <= 800 ? (
     <section className="main main-tablet">
       <div className="main__settings">
         <div className="main__settings-first-box">
           <div className="main__settings-background">
             <Typography variant="subtitle1">Background Color:</Typography>
-            <Button onClick={() => setIsbackgroundColorPickerOpen(!isbackgroundColorPickerOpen)}>
-              {isbackgroundColorPickerOpen ? 'Close background palette' : 'Open background palette'}
-            </Button>
-            {bgColors.length >= 1 && <Button onClick={() => setBgColors([])}>reset colors</Button>}
+            <div className="main__settings-buttons">
+              {' '}
+              <Button onClick={() => setIsbackgroundColorPickerOpen(!isbackgroundColorPickerOpen)}>
+                {isbackgroundColorPickerOpen ? `Close` : `Open`} background palette
+              </Button>
+              <Button onClick={() => setBgColors([])}>
+                {bgColors.length >= 1 &&
+                  `reset colors        
+               `}
+              </Button>
+              <Typography variant="subtitle1">
+                selected colors {bgColors.length}
+                (up to 4)
+              </Typography>
+            </div>
+
             <BackgroundColorPickerComponent colors={bgColors} setColors={setBgColors} isVisible={isbackgroundColorPickerOpen} />
           </div>
           <div className="main__settings-triangles">
-            <Typography variant="subtitle1">Triangles colors:</Typography>
+            <Typography variant="subtitle1">{!isCirclesApp ? 'Triangles ' : 'Circles '}colors:</Typography>
             <Button onClick={() => setIsTrianglesColorPickerOpen(!isTrianglesColorPickerOpen)}>
-              {' '}
-              {isTrianglesColorPickerOpen ? 'Close background palette' : 'Open background palette'}
+              {isTrianglesColorPickerOpen ? `Close ${isCirclesApp ? 'triangle' : 'circle'} palette` : 'Open triangle palette'}
             </Button>
             <TriangleColorPickerComponent
               className="right-menu__triangles-color-picker"
-              triangleColors={triangleColors}
-              setTriangleColors={setTriangleColors}
-              triangleStrokeColor={triangleStrokeColor}
-              setTriangleStrokeColor={setTriangleStrokeColor}
+              fillColor={fillColor}
+              setFillColor={setFillColor}
+              strokeColor={strokeColor}
+              setStrokeColor={setStrokeColor}
               isVisible={isTrianglesColorPickerOpen}
             />
-            <Typography variant="subtitle1">Triangle size:</Typography>
-            <Slider
-              className="right-menu__triangle-size-slider"
-              aria-label="Restricted values"
-              valueLabelDisplay="auto"
-              step={null}
-              sx={{
-                width: 150,
-              }}
-              marks={marks.map((mark) => ({
-                ...mark,
-                label: mark.value === trianglesSize && '',
-              }))}
-              min={0}
-              max={bgSize}
-              onChange={(event, newSize) => setTrianglesSize(newSize * 2)}
-            />{' '}
+            <Typography variant="subtitle1">{isCirclesApp ? 'Triangle' : 'Circle'} size:</Typography>
+            {!isCirclesApp ? (
+              <Slider
+                className="right-menu__triangle-size-slider"
+                aria-label="Restricted values"
+                valueLabelDisplay="auto"
+                step={null}
+                sx={{
+                  width: '300px',
+                  '& .MuiSlider-rail': {
+                    height: 8, // Adjust the height of the rail
+                    borderRadius: 4, // Adjust the border radius of the rail
+                  },
+                  '& .MuiSlider-track': {
+                    height: 8, // Adjust the height of the track
+                    borderRadius: 4, // Adjust the border radius of the track
+                  },
+                }}
+                marks={marks.map((mark) => ({
+                  ...mark,
+                  label: mark.value === trianglesSize && '',
+                }))}
+                min={0}
+                max={bgSize}
+                onChange={(event, newSize) => setTrianglesSize(newSize * 2)}
+              />
+            ) : (
+              <Slider
+                sx={{
+                  width: '300px',
+                  '& .MuiSlider-rail': {
+                    height: 8, // Adjust the height of the rail
+                    borderRadius: 4, // Adjust the border radius of the rail
+                  },
+                  '& .MuiSlider-track': {
+                    height: 8, // Adjust the height of the track
+                    borderRadius: 4, // Adjust the border radius of the track
+                  },
+                }}
+                className="right-menu__triangle-size-slider"
+                getAriaLabel={() => 'Temperature range'}
+                valueLabelDisplay="auto"
+                value={strokeWidth}
+                onChange={(event, newStrokeWidth) => setStrokeWidth(newStrokeWidth)}
+                marks={marks}
+                min={1}
+                max={10}
+                step={1}
+                disableSwap
+              />
+            )}
           </div>{' '}
         </div>
         <div className="main__settings-buttons-box">
-          <button className="main__run-button" onClick={() => setIsClicked(!isClicked)}>
+          <button className="main__button main__run-button" onClick={handleIsClicked}>
             Run
           </button>
-          <button className="main__save-button" onClick={handleSaveClick}>
+          <button className=" main__button main__save-button" onClick={handleSaveClick}>
             Save
           </button>
-          {/* <Typography variant="h5" className="right-menu__advanced-title">
-            Advanced Triangles Settings
-          </Typography>
-          <FormControl>
-            <FormLabel className="right-menu__triangles-congestion">Triangles congestion:</FormLabel>
-            <RadioGroup
-              row
-              className="right-menu__triangles-radio"
-              aria-labelledby="demo-row-radio-buttons-group-label"
-              name="row-radio-buttons-group"
-            >
-              <FormControlLabel
-                className="right-menu__triangles-congestion-item"
-                value="1"
-                control={<Radio className="right-menu__triangles-congestion-item" />}
-              />
-              <FormControlLabel
-                className="right-menu__triangles-congestion-item"
-                value="2"
-                control={<Radio className="right-menu__triangles-congestion-item" />}
-              />
-              <FormControlLabel
-                className="right-menu__triangles-congestion-item"
-                value="3"
-                control={<Radio className="right-menu__triangles-congestion-item" />}
-              />
-              <FormControlLabel
-                className="right-menu__triangles-congestion-item"
-                value="4"
-                control={<Radio className="right-menu__triangles-congestion-item" />}
-              />
-              <FormControlLabel
-                className="right-menu__triangles-congestion-item"
-                value="?"
-                control={<Radio className="right-menu__triangles-congestion-item" />}
-              />
-            </RadioGroup>
-          </FormControl>
-          <Typography variant="subtitle1">Sequence:</Typography> */}
+          <button className="main__button main__circle-button" onClick={handleCirclesApp}>
+            circles
+          </button>
         </div>
       </div>
       <div className="main__content-tablet">
-        <TrianglesCanvas
-          screen={screen}
-          bgSize={bgSize}
-          isClicked={isClicked}
-          canvasRef={canvasRef}
-          triangleColors={triangleColors}
-          setTriangleColors={setTriangleColors}
-          bgColors={bgColors}
-          trianglesSize={trianglesSize}
-        />
+        {!isCirclesApp ? (
+          <TrianglesCanvas
+            screen={screen}
+            bgSize={bgSize}
+            isClicked={isClicked}
+            canvasRef={canvasRef2}
+            strokeColor={strokeColor}
+            fillColor={fillColor}
+            setFillColor={setFillColor}
+            bgColors={bgColors}
+            trianglesSize={trianglesSize}
+          />
+        ) : (
+          <Circles
+            screen={screen}
+            bgSize={bgSize}
+            isClicked={isClicked}
+            size={size}
+            strokeColor={strokeColor}
+            fillColor={fillColor}
+            bgColors={bgColors}
+            strokeWidth={strokeWidth}
+            canvasRef={canvasRef1}
+          />
+        )}
       </div>
     </section>
   ) : (
-    screen < 500 && <></>
+    ''
   );
-}
+};
 
 export default Main;

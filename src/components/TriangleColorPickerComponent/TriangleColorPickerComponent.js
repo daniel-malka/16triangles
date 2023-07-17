@@ -2,17 +2,18 @@ import React from 'react';
 import { SketchPicker } from 'react-color';
 import './TriangleColorPickerComponent.css';
 
-const TriangleColorPickerComponent = ({ isVisible, triangleColors, setTriangleColors }) => {
+const TriangleColorPickerComponent = ({ isVisible, strokeColor, setStrokeColor }) => {
   const handleColorChange = (color, index) => {
-    const updatedColors = [...triangleColors];
+    const updatedColors = [...strokeColor];
     updatedColors[index] = color.hex;
-    setTriangleColors(updatedColors);
+    setStrokeColor(updatedColors);
   };
 
   return (
-    isVisible && (
-      <div>
-        {triangleColors.map((color, index) => (
+    isVisible &&
+    Array.isArray(strokeColor) && (
+      <div className="sketchpicker triangle-sketchpicker">
+        {strokeColor.map((color, index) => (
           <div key={index}>
             <SketchPicker color={color} onChange={(newColor) => handleColorChange(newColor, index)} />
           </div>

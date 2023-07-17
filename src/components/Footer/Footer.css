@@ -9,6 +9,9 @@ footer.footer {
   width: 100%;
   padding: 0 104px;
   background-color: #fff;
+  position: fixed;
+  left: 0;
+  bottom: 0;
 }
 .footer__link,
 .footer__email {

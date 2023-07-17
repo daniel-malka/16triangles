@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react';
-
+import React, { useEffect } from 'react';
+import generateUniqueRandomNumbers from '../../utilities/functions';
 const trianglesConfigs = [
   [1],
   [2],
@@ -602,16 +602,7 @@ const trianglesConfigs = [
   [10, 11, 14],
 ];
 
-const TrianglesCanvas = ({
-  screen,
-  isClicked,
-  canvasRef,
-  bgColors,
-  triangleStrokeColor,
-  triangleColors,
-  trianglesSize,
-  bgSize,
-}) => {
+const TrianglesCanvas = ({ screen, isClicked, canvasRef, bgColors, strokeColor, fillColor, trianglesSize, bgSize }) => {
   const configs = {
     1: [0, 0, trianglesSize / 4, 0, 0, trianglesSize / 4],
     2: [0, 0, trianglesSize / 4, 0, trianglesSize / 4, trianglesSize / 4],
@@ -630,15 +621,16 @@ const TrianglesCanvas = ({
     15: [trianglesSize / 2, trianglesSize / 4, trianglesSize / 2, trianglesSize / 2, trianglesSize / 4, trianglesSize / 2],
     16: [trianglesSize / 4, trianglesSize / 4, trianglesSize / 2, trianglesSize / 2, trianglesSize / 4, trianglesSize / 2],
   };
+  let numbers2 = generateUniqueRandomNumbers(0, 1, 2);
+  let numbers3 = generateUniqueRandomNumbers(0, 2, 3);
+  let numbers4 = generateUniqueRandomNumbers(0, 3, 4);
   let coin = Math.random();
-
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
-    canvas.width = screen === undefined ? bgSize : screen - 100;
-    canvas.height = screen === undefined ? bgSize : screen - 100;
+    canvas.width = screen > 1440 ? 800 : bgSize;
+    canvas.height = screen > 1440 ? 800 : bgSize;
     const numColors = bgColors.length;
-    ctx.strokeStyle = 'none';
     if (numColors === 1) {
       ctx.fillStyle = bgColors[0];
       ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -646,53 +638,81 @@ const TrianglesCanvas = ({
       const halfWidth = canvas.width / 2;
       const halfHeight = canvas.height / 2;
       if (coin > 0.5) {
-        ctx.fillStyle = bgColors[0];
+        ctx.fillStyle = bgColors[numbers2[0]];
         ctx.fillRect(0, 0, halfWidth, canvas.height);
-        ctx.fillStyle = bgColors[1];
+        ctx.fillStyle = bgColors[numbers2[1]];
         ctx.fillRect(halfWidth, 0, halfWidth, canvas.height);
       } else if (coin <= 0.5) {
-        ctx.fillStyle = bgColors[1];
+        ctx.fillStyle = bgColors[numbers2[0]];
         ctx.fillRect(0, 0, canvas.width, halfHeight);
-        ctx.fillStyle = bgColors[0];
+        ctx.fillStyle = bgColors[numbers2[1]];
         ctx.fillRect(0, halfHeight, canvas.width, halfHeight);
       }
     } else if (numColors === 3) {
       const thirdWidth = canvas.width / 3;
       if (coin > 0.666) {
-        ctx.fillStyle = bgColors[0];
+        ctx.fillStyle = bgColors[numbers3[0]];
         ctx.fillRect(0, 0, thirdWidth, canvas.height);
-        ctx.fillStyle = bgColors[1];
+        ctx.fillStyle = bgColors[numbers3[1]];
         ctx.fillRect(thirdWidth, 0, thirdWidth, canvas.height);
-        ctx.fillStyle = bgColors[2];
+        ctx.fillStyle = bgColors[numbers3[2]];
         ctx.fillRect(2 * thirdWidth, 0, thirdWidth, canvas.height);
       } else if (coin <= 0.666 && coin > 0.333) {
-        ctx.fillStyle = bgColors[0];
+        ctx.fillStyle = bgColors[numbers3[0]];
         ctx.fillRect(0, 0, thirdWidth, canvas.height);
-        ctx.fillStyle = bgColors[2];
+        ctx.fillStyle = bgColors[numbers3[1]];
         ctx.fillRect(thirdWidth, 0, thirdWidth, canvas.height);
-        ctx.fillStyle = bgColors[1];
+        ctx.fillStyle = bgColors[numbers3[2]];
         ctx.fillRect(2 * thirdWidth, 0, thirdWidth, canvas.height);
       } else if (coin <= 0.333) {
-        ctx.fillStyle = bgColors[1];
+        ctx.fillStyle = bgColors[numbers3[0]];
         ctx.fillRect(0, 0, thirdWidth, canvas.height);
-        ctx.fillStyle = bgColors[0];
+        ctx.fillStyle = bgColors[numbers3[1]];
         ctx.fillRect(thirdWidth, 0, thirdWidth, canvas.height);
-        ctx.fillStyle = bgColors[2];
+        ctx.fillStyle = bgColors[numbers3[2]];
         ctx.fillRect(2 * thirdWidth, 0, thirdWidth, canvas.height);
       }
     } else if (numColors === 4) {
       const quarter = canvas.width / 2;
-      if (coin > 0.75) {
-        ctx.fillStyle = bgColors[0];
+      if (coin >= 0.75) {
+        ctx.fillStyle = bgColors[numbers4[0]];
         ctx.fillRect(0, 0, quarter, quarter);
-        ctx.fillStyle = bgColors[1];
+        ctx.fillStyle = bgColors[numbers4[1]];
         ctx.fillRect(quarter, 0, quarter, quarter);
-        ctx.fillStyle = bgColors[2];
+        ctx.fillStyle = bgColors[numbers4[2]];
         ctx.fillRect(0, quarter, quarter, quarter);
-        ctx.fillStyle = bgColors[3];
+        ctx.fillStyle = bgColors[numbers4[3]];
+        ctx.fillRect(quarter, quarter, quarter, quarter);
+      } else if (coin < 0.75 && coin >= 0.5) {
+        ctx.fillStyle = bgColors[numbers4[0]];
+        ctx.fillRect(0, 0, quarter, quarter);
+        ctx.fillStyle = bgColors[numbers4[1]];
+        ctx.fillRect(quarter, 0, quarter, quarter);
+        ctx.fillStyle = bgColors[numbers4[2]];
+        ctx.fillRect(0, quarter, quarter, quarter);
+        ctx.fillStyle = bgColors[numbers4[3]];
+        ctx.fillRect(quarter, quarter, quarter, quarter);
+      } else if (coin < 0.5 && coin >= 0.25) {
+        ctx.fillStyle = bgColors[numbers4[0]];
+        ctx.fillRect(0, 0, quarter, quarter);
+        ctx.fillStyle = bgColors[numbers4[1]];
+        ctx.fillRect(quarter, 0, quarter, quarter);
+        ctx.fillStyle = bgColors[numbers4[2]];
+        ctx.fillRect(0, quarter, quarter, quarter);
+        ctx.fillStyle = bgColors[numbers4[3]];
+        ctx.fillRect(quarter, quarter, quarter, quarter);
+      } else if (coin < 0.25) {
+        ctx.fillStyle = bgColors[numbers4[0]];
+        ctx.fillRect(0, 0, quarter, quarter);
+        ctx.fillStyle = bgColors[numbers4[1]];
+        ctx.fillRect(quarter, 0, quarter, quarter);
+        ctx.fillStyle = bgColors[numbers4[2]];
+        ctx.fillRect(0, quarter, quarter, quarter);
+        ctx.fillStyle = bgColors[numbers4[3]];
         ctx.fillRect(quarter, quarter, quarter, quarter);
       }
     }
+    ctx.strokeStyle = 'none';
     draw(ctx);
 
     const handleCanvasClick = (event) => {
@@ -750,12 +770,13 @@ const TrianglesCanvas = ({
     ctx.lineTo(x + x2, y + y2);
     ctx.lineTo(x + x3, y + y3);
     ctx.closePath();
+    ctx.strokeStyle = 'none';
     ctx.fill();
   };
 
   const draw = (ctx) => {
-    ctx.fillStyle = triangleColors[0];
-    ctx.strokeStyle = triangleStrokeColor;
+    ctx.fillStyle = strokeColor;
+    ctx.strokeStyle = strokeColor;
     for (let y = 0; y < ctx.canvas.height; y += trianglesSize / 2) {
       for (let x = 0; x < ctx.canvas.width; x += trianglesSize / 2) {
         const randIndex = Math.floor(Math.random() * trianglesConfigs.length);

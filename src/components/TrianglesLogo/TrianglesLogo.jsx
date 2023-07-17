@@ -1,49 +1,31 @@
 import React, { useEffect, useRef } from 'react';
-const configs = {
-  1: [0, 0, 15, 0, 0, 15],
-  2: [0, 0, 15, 0, 15, 15],
-  3: [15, 0, 15, 15, 0, 15],
-  4: [0, 0, 15, 15, 15, 15],
-  5: [15, 0, 30, 0, 15, 15],
-  6: [15, 0, 30, 0, 30, 15],
-  7: [30, 0, 30, 15, 15, 15],
-  8: [15, 0, 30, 15, 15, 15],
-  9: [0, 15, 15, 15, 0, 30],
-  10: [0, 15, 15, 15, 15, 30],
-  11: [15, 15, 15, 30, 0, 30],
-  12: [0, 15, 15, 30, 0, 30],
-  13: [15, 15, 30, 15, 15, 30],
-  14: [15, 15, 30, 15, 30, 30],
-  15: [30, 15, 30, 30, 15, 30],
-  16: [15, 15, 30, 30, 15, 30],
-};
-const trianglesConfigs = [
-  { rand116: 0, triangles: [1] },
-  { rand116: 1, triangles: [2] },
-  { rand116: 2, triangles: [3] },
-  { rand116: 3, triangles: [4] },
-  { rand116: 4, triangles: [5] },
-  { rand116: 5, triangles: [6] },
-  { rand116: 6, triangles: [7] },
-  { rand116: 7, triangles: [8] },
-  { rand116: 8, triangles: [9] },
-  { rand116: 9, triangles: [10] },
-  { rand116: 10, triangles: [11] },
-  { rand116: 11, triangles: [12] },
-  { rand116: 12, triangles: [13] },
-  { rand116: 13, triangles: [14] },
-  { rand116: 14, triangles: [15] },
-  { rand116: 15, triangles: [16] },
-];
 
-const TrianglesLogo = () => {
+const TrianglesLogo = ({ triNum, size }) => {
   const canvasRef = useRef(null);
-
+  let trianglesSize = size * 2;
+  const configs = {
+    1: [0, 0, trianglesSize / 4, 0, 0, trianglesSize / 4],
+    2: [0, 0, trianglesSize / 4, 0, trianglesSize / 4, trianglesSize / 4],
+    3: [trianglesSize / 4, 0, trianglesSize / 4, trianglesSize / 4, 0, trianglesSize / 4],
+    4: [0, 0, trianglesSize / 4, trianglesSize / 4, 0, trianglesSize / 4],
+    5: [trianglesSize / 4, 0, trianglesSize / 2, 0, trianglesSize / 4, trianglesSize / 4],
+    6: [trianglesSize / 4, 0, trianglesSize / 2, 0, trianglesSize / 2, trianglesSize / 4],
+    7: [trianglesSize / 2, 0, trianglesSize / 2, trianglesSize / 4, trianglesSize / 4, trianglesSize / 4],
+    8: [trianglesSize / 4, 0, trianglesSize / 2, trianglesSize / 4, trianglesSize / 4, trianglesSize / 4],
+    9: [0, trianglesSize / 4, trianglesSize / 4, trianglesSize / 4, 0, trianglesSize / 2],
+    10: [0, trianglesSize / 4, trianglesSize / 4, trianglesSize / 4, trianglesSize / 4, trianglesSize / 2],
+    11: [trianglesSize / 4, trianglesSize / 4, trianglesSize / 4, trianglesSize / 2, 0, trianglesSize / 2],
+    12: [0, trianglesSize / 4, trianglesSize / 4, trianglesSize / 2, 0, trianglesSize / 2],
+    13: [trianglesSize / 4, trianglesSize / 4, trianglesSize / 2, trianglesSize / 4, trianglesSize / 4, trianglesSize / 2],
+    14: [trianglesSize / 4, trianglesSize / 4, trianglesSize / 2, trianglesSize / 4, trianglesSize / 2, trianglesSize / 2],
+    15: [trianglesSize / 2, trianglesSize / 4, trianglesSize / 2, trianglesSize / 2, trianglesSize / 4, trianglesSize / 2],
+    16: [trianglesSize / 4, trianglesSize / 4, trianglesSize / 2, trianglesSize / 2, trianglesSize / 4, trianglesSize / 2],
+  };
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
-    canvas.width = 900;
-    canvas.height = 30;
+    canvas.width = size;
+    canvas.height = size;
     ctx.fillStyle = 'black';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     draw(ctx);
@@ -57,6 +39,16 @@ const TrianglesLogo = () => {
     ctx.lineTo(x + x3, y + y3);
     ctx.closePath();
     ctx.fill();
+    // Draw the text
+    const centerX = (x + x1 + x + x2 + x + x3) / 3;
+    const centerY = (y + y1 + y + y2 + y + y3) / 3;
+
+    // Draw the text
+    ctx.fillStyle = 'black';
+    ctx.font = 'bold 24px Arial';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(triNum.toString(), centerX, centerY);
   };
   const drawSquare = (ctx, x, y, wh) => {
     ctx.lineWidth = 1;
@@ -68,20 +60,41 @@ const TrianglesLogo = () => {
     ctx.lineTo(x, y);
     ctx.closePath();
     ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(x, wh / 2);
+    ctx.lineTo(x + wh, wh / 2);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(wh / 2, y);
+    ctx.lineTo(wh / 2, y + wh);
+    ctx.closePath();
+    ctx.stroke();
   };
   const draw = (ctx) => {
     ctx.fillStyle = 'white';
     ctx.strokeStyle = 'white';
 
-    for (let x = 0; x <= ctx.canvas.width; x += 30) {
-      const randIndex = Math.floor(Math.random() * 16);
-      const triangles = trianglesConfigs[randIndex].triangles;
-      drawTri16(ctx, x, 0, triangles);
-      drawSquare(ctx, x, 0, 30);
-    }
+    drawTri16(ctx, 0, 0, triNum);
+    drawSquare(ctx, 0, 0, size);
   };
 
-  return <canvas ref={canvasRef} />;
+  return (
+    <div style={{ position: 'relative', zIndex: 999, boxSizing: 'border-box', margin: '10px' }}>
+      <canvas ref={canvasRef} />
+      <div
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+
+          boxSizing: 'border-box',
+        }}
+      />
+    </div>
+  );
 };
 
 export default TrianglesLogo;
