@@ -32,5 +32,6 @@ We have some exciting plans for future enhancements to the 16 Triangles program:
 - Additional Export Formats: In addition to image files, we are exploring options to export triangle art in other formats such as vector graphics, allowing for scaling and editing without loss of quality.
 
 We welcome any feedback, suggestions, or contributions to make the 16 Triangles program even better!
-
-## License
+![‏‏צילום מסך (140)](https://github.com/daniel-malka/16triangles/assets/91151689/68a7f4d2-120a-43d2-8de2-a754dc033343)
+![‏‏צילום מסך (146)](https://github.com/daniel-malka/16triangles/assets/91151689/0889272d-a1cb-4058-a11c-342c6fb41726)
+![‏‏צילום מסך (139)](https://github.com/daniel-malka/16triangles/assets/91151689/fe1d960a-0650-4c1d-a02c-22b4607a8f02)
