@@ -31,7 +31,16 @@ We have some exciting plans for future enhancements to the 16 Triangles program:
 - Community Gallery: We plan to introduce a community gallery where users can showcase their artwork and explore creations made by other artists. This will foster a sense of community and inspiration among users.
 - Additional Export Formats: In addition to image files, we are exploring options to export triangle art in other formats such as vector graphics, allowing for scaling and editing without loss of quality.
 
+
 We welcome any feedback, suggestions, or contributions to make the 16 Triangles program even better!
 ![‏‏צילום מסך (140)](https://github.com/daniel-malka/16triangles/assets/91151689/68a7f4d2-120a-43d2-8de2-a754dc033343)
-![‏‏צילום מסך (146)](https://github.com/daniel-malka/16triangles/assets/91151689/0889272d-a1cb-4058-a11c-342c6fb41726)
 ![‏‏צילום מסך (139)](https://github.com/daniel-malka/16triangles/assets/91151689/fe1d960a-0650-4c1d-a02c-22b4607a8f02)
+![‏‏צילום מסך (146)](https://github.com/daniel-malka/16triangles/assets/91151689/0889272d-a1cb-4058-a11c-342c6fb41726)
+
+![canvas (9)](https://github.com/daniel-malka/16triangles/assets/91151689/30fd9c5f-663c-4086-8a0e-c31197bd1c18)
+![canvas (8)](https://github.com/daniel-malka/16triangles/assets/91151689/59de5f7c-686d-4d96-ab65-377e2d523f39)
+![canvas (7)](https://github.com/daniel-malka/16triangles/assets/91151689/7a5a0127-d3ab-46e9-b98d-c57892983103)
+![canvas (6)](https://github.com/daniel-malka/16triangles/assets/91151689/cce57d2f-13ce-4195-ad07-cac4b526c7fe)
+![canvas (5)](https://github.com/daniel-malka/16triangles/assets/91151689/3b2e34ab-b873-4be3-8e1d-eb911cc437a2)
+![canvas (4)](https://github.com/daniel-malka/16triangles/assets/91151689/4a694cef-1549-48b0-bb28-4b34bdf28b4b)
+![canvas (3)](https://github.com/daniel-malka/16triangles/assets/91151689/a049422f-aadd-44f8-b485-7f85aef92070)
