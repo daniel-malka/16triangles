@@ -15,8 +15,9 @@ The purpose of this program is to provide a fun and creative way to generate tri
 - Sharing with Friends: The program allows users to easily share their favorite triangle art pieces with friends. Sharing options may include social media integration or direct sharing via email or messaging platforms.
 
 ## Getting Started
+go to: https://16triangles.vercel.app/
 
-To get started with the program, follow these steps:
+Or if you wish to get started with the program localy, follow these steps:
 
 1. Clone or download the repository to your local machine.
 2. Install any necessary dependencies (list them here if applicable).
